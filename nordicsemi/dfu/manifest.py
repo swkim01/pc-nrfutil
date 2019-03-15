@@ -39,6 +39,7 @@
 import json
 import binascii
 import os
+from six import iteritems
 
 # Nordic libraries
 from pc_ble_driver_py.exceptions import NotImplementedException
@@ -92,7 +93,7 @@ class ManifestGenerator(object):
             if not isinstance(d, dict):
                 return d
 
-            return dict((k, remove_none_entries(v)) for k, v in d.iteritems() if v is not None)
+            return dict((k, remove_none_entries(v)) for k, v in iteritems(d) if v is not None)
 
         return json.dumps({'manifest': self.manifest},
                           default=lambda o: remove_none_entries(o.__dict__),

@@ -101,7 +101,8 @@ class InitPacketPB(object):
 
             boot_validation = []
             for i, x in enumerate(boot_validation_type):
-                boot_validation.append(pb.BootValidation(type=x.value, bytes=boot_validation_bytes[i]))
+                #boot_validation.append(pb.BootValidation(type=x.value, bytes=boot_validation_bytes[i]))
+                boot_validation.append(pb.BootValidation(type=x.value, bytes=boot_validation_bytes[i].encode('latin1')))
 
             # By default, set the packet's command to an unsigned command
             # If a signature is set (via set_signature), this will get overwritten

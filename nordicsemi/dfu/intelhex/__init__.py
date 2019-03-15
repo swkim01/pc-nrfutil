@@ -50,6 +50,7 @@ import os
 import sys
 
 from .compat import asbytes, asstr
+from six.moves import xrange
 
 
 class _DeprecatedParam(object):
@@ -400,7 +401,7 @@ class IntelHex(object):
         else:
             close_fd = False
 
-        fobj.write(self._tobinstr_really(start, end, pad, size))
+        fobj.write(asbytes(self._tobinstr_really(start, end, pad, size)))
 
         if close_fd:
             fobj.close()

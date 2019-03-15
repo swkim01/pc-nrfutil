@@ -38,6 +38,7 @@
 from nordicsemi.dfu import intelhex
 from struct import unpack
 from enum import Enum
+from six.moves import xrange
 
 class nRFArch(Enum):
     NRF51 = 1
@@ -153,7 +154,7 @@ class nRFHex(intelhex.IntelHex):
 
         # Round up to nearest word
         word_size = 4
-        number_of_words = (size + (word_size - 1)) / word_size
+        number_of_words = int((size + (word_size - 1)) / word_size)
         size = number_of_words * word_size
 
         return size

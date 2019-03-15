@@ -48,6 +48,7 @@ from __future__ import print_function
 import hashlib
 import binascii
 import datetime
+from six.moves import xrange
 
 try:
     from ecdsa import SigningKey
@@ -75,7 +76,7 @@ class Signing(object):
         """
         self.sk = SigningKey.generate(curve=NIST256p)
 
-        with open(filename, "w") as sk_file:
+        with open(filename, "wb") as sk_file:
             sk_file.write(self.sk.to_pem())
 
     def load_key(self, filename):
@@ -89,7 +90,8 @@ class Signing(object):
 
         self.sk = SigningKey.from_pem(sk_pem)
 
-        sk_hex = "".join(c.encode('hex') for c in self.sk.to_string())
+        #sk_hex = "".join(c.encode('hex') for c in self.sk.to_string())
+        sk_hex = binascii.hexlify(self.sk.to_string())
         return default_sk.to_string() == self.sk.to_string()
 
     def sign(self, init_packet_data):
@@ -241,12 +243,12 @@ class Signing(object):
         vk_x_separated = ""
         vk_x_str = vk_hex[0:64]
         for i in xrange(0, len(vk_x_str), 2):
-            vk_x_separated = "0x" + vk_x_str[i:i+2] + ", " + vk_x_separated
+            vk_x_separated = "0x" + vk_x_str[i:i+2].decode() + ", " + vk_x_separated
 
         vk_y_separated = ""
         vk_y_str = vk_hex[64:128]
         for i in xrange(0, len(vk_y_str), 2):
-            vk_y_separated = "0x" + vk_y_str[i:i+2] + ", " + vk_y_separated
+            vk_y_separated = "0x" + vk_y_str[i:i+2].decode() + ", " + vk_y_separated
         vk_y_separated = vk_y_separated[:-2]
         
         key_code ="""
