@@ -39,6 +39,7 @@ from __future__ import print_function
 # Nordic libraries
 from pc_ble_driver_py.exceptions import NordicSemiException
 from enum import Enum
+from six.moves import input as raw_input
 
 # From http://stackoverflow.com/questions/4472901/python-enum-class-with-tostring-fromstring
 class NordicEnum(Enum):
